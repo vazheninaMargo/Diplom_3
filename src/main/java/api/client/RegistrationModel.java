@@ -1,17 +1,17 @@
-package api.model;
+package api.client;
 
-public class UserCreateModel {
+public class RegistrationModel {
     private String email;
     private String password;
     private String name;
 
-    public UserCreateModel(String email, String password, String name) {
+    public RegistrationModel(String email, String password, String name) {
         this.email = email;
         this.password = password;
         this.name = name;
     }
 
-    public UserCreateModel() {
+    public RegistrationModel() {
     }
 
     public String getEmail() {

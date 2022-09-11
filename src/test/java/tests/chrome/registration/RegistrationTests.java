@@ -7,8 +7,8 @@ import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Test;
 import pages.registration.RegistrationPageModel;
-import api.model.LoginUserResponseModel;
-import api.model.UserLoginModel;
+import api.client.LoginResponseModel;
+import api.client.LoginModel;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 import static com.codeborne.selenide.Selenide.open;
@@ -55,7 +55,7 @@ public class RegistrationTests {
         // Возвращение тестового окружения к исходному виду
         RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
 
-        UserLoginModel userLoginModel = new UserLoginModel(
+        LoginModel userLoginModel = new LoginModel(
                 email,
                 password
         );
@@ -66,7 +66,7 @@ public class RegistrationTests {
             return;
         }
 
-        String token = loginResponse.body().as(LoginUserResponseModel.class).getAccessToken();
+        String token = loginResponse.body().as(LoginResponseModel.class).getAccessToken();
         if (token != null) {
             ApiClient.sendDeleteCourier(token);
         }

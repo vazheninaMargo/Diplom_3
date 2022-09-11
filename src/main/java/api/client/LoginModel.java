@@ -1,15 +1,15 @@
-package api.model;
+package api.client;
 
-public class UserLoginModel {
+public class LoginModel {
     private String email;
     private String password;
 
-    public UserLoginModel(String email, String password) {
+    public LoginModel(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
-    public UserLoginModel() {
+    public LoginModel() {
     }
 
     public String getEmail() {

@@ -4,14 +4,14 @@ import io.qameta.allure.Step;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.response.Response;
-import api.model.UserCreateModel;
-import api.model.UserLoginModel;
+import api.client.RegistrationModel;
+import api.client.LoginModel;
 
 import static io.restassured.RestAssured.given;
 
 public class ApiClient {
     @Step("Send POST request to /api/auth/register")
-    static public Response sendPostCreateUser(UserCreateModel model) {
+    static public Response sendPostCreateUser(RegistrationModel model) {
         return given()
                 .filters(new RequestLoggingFilter(), new ResponseLoggingFilter())
                 .body(model)
@@ -21,7 +21,7 @@ public class ApiClient {
     }
 
     @Step("Send POST request to /api/auth/login")
-    static public Response sendPostLoginUser(UserLoginModel model) {
+    static public Response sendPostLoginUser(LoginModel model) {
         return given()
                 .filters(new RequestLoggingFilter(), new ResponseLoggingFilter())
                 .body(model)

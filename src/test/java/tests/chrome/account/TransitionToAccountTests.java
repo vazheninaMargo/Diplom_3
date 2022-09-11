@@ -10,9 +10,9 @@ import org.junit.Test;
 import pages.login.LoginPageModel;
 import pages.constructor.ConstructorPageModel;
 import pages.profile.ProfilePageModel;
-import api.model.LoginUserResponseModel;
-import api.model.UserCreateModel;
-import api.model.UserLoginModel;
+import api.client.LoginResponseModel;
+import api.client.RegistrationModel;
+import api.client.LoginModel;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 import static com.codeborne.selenide.Selenide.open;
@@ -27,7 +27,7 @@ public class TransitionToAccountTests {
     @Before
     public void prepare() {
         RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
-        UserCreateModel userCreateModel = new UserCreateModel(email, password, name);
+        RegistrationModel userCreateModel = new RegistrationModel(email, password, name);
         ApiClient.sendPostCreateUser(userCreateModel);
     }
 
@@ -48,7 +48,7 @@ public class TransitionToAccountTests {
     @After
     public void clear() {
         // Возвращение тестового окружения к исходному виду
-        UserLoginModel userLoginModel = new UserLoginModel(
+        LoginModel userLoginModel = new LoginModel(
                 email,
                 password
         );
@@ -59,7 +59,7 @@ public class TransitionToAccountTests {
             return;
         }
 
-        String token = loginResponse.body().as(LoginUserResponseModel.class).getAccessToken();
+        String token = loginResponse.body().as(LoginResponseModel.class).getAccessToken();
         if (token != null) {
             ApiClient.sendDeleteCourier(token);
         }

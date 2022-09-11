@@ -13,8 +13,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import pages.registration.RegistrationPageModel;
-import api.model.LoginUserResponseModel;
-import api.model.UserLoginModel;
+import api.client.LoginResponseModel;
+import api.client.LoginModel;
 
 import java.util.Properties;
 
@@ -74,7 +74,7 @@ public class RegistrationTests {
         // Возвращение тестового окружения к исходному виду
         RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
 
-        UserLoginModel userLoginModel = new UserLoginModel(
+        LoginModel userLoginModel = new LoginModel(
                 email,
                 password
         );
@@ -85,7 +85,7 @@ public class RegistrationTests {
             return;
         }
 
-        String token = loginResponse.body().as(LoginUserResponseModel.class).getAccessToken();
+        String token = loginResponse.body().as(LoginResponseModel.class).getAccessToken();
         if (token != null) {
             ApiClient.sendDeleteCourier(token);
         }
