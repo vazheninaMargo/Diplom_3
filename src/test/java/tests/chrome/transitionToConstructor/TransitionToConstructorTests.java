@@ -1,18 +1,18 @@
 package tests.chrome.transitionToConstructor;
 
-import helpers.UserTestsHelper;
+import utils.ApiClient;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import pageObjects.constructor.ConstructorPageModel;
-import pageObjects.login.LoginPageModel;
-import pageObjects.profile.ProfilePageModel;
-import praktikum.LoginUserResponseModel;
-import praktikum.UserCreateModel;
-import praktikum.UserLoginModel;
+import pages.constructor.ConstructorPageModel;
+import pages.login.LoginPageModel;
+import pages.profile.ProfilePageModel;
+import api.model.LoginUserResponseModel;
+import api.model.UserCreateModel;
+import api.model.UserLoginModel;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 import static com.codeborne.selenide.Selenide.open;
@@ -27,13 +27,13 @@ public class TransitionToConstructorTests {
     public void prepare() {
         RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
         UserCreateModel userCreateModel = new UserCreateModel(email, password, name);
-        UserTestsHelper.sendPostCreateUser(userCreateModel);
+        ApiClient.sendPostCreateUser(userCreateModel);
 
         UserLoginModel userLoginModel = new UserLoginModel(
                 email,
                 password
         );
-        UserTestsHelper.sendPostLoginUser(userLoginModel);
+        ApiClient.sendPostLoginUser(userLoginModel);
     }
 
     @Test
@@ -43,13 +43,13 @@ public class TransitionToConstructorTests {
         LoginPageModel loginPageModel = open("https://stellarburgers.nomoreparties.site/login", LoginPageModel.class);
 
         // переход на страницу персонального аккаунта
-        ProfilePageModel profilePageModel = loginPageModel.login(email, password).clickPersonalAccountForProfile();
+        ProfilePageModel profilePageModel = loginPageModel.login(email, password).openAccountByPersonalAccountButton();
 
         // проверка существования страницы персонального аккаунта
         profilePageModel.checkMainIsExisted();
 
         // переход на страницу конструктора по клику на лого
-        ConstructorPageModel constructorPageModel = profilePageModel.clickByLogo();
+        ConstructorPageModel constructorPageModel = profilePageModel.transitionToConstructor();
 
         // проверка существования страницы конструктора
         constructorPageModel.checkMainIsExisted();
@@ -62,7 +62,7 @@ public class TransitionToConstructorTests {
                 email,
                 password
         );
-        Response loginResponse = UserTestsHelper.sendPostLoginUser(userLoginModel);
+        Response loginResponse = ApiClient.sendPostLoginUser(userLoginModel);
 
         if (loginResponse.statusCode() != 200) {
             closeWebDriver();
@@ -71,7 +71,7 @@ public class TransitionToConstructorTests {
 
         String token = loginResponse.body().as(LoginUserResponseModel.class).getAccessToken();
         if (token != null) {
-            UserTestsHelper.sendDeleteCourier(token);
+            ApiClient.sendDeleteCourier(token);
         }
 
         closeWebDriver();

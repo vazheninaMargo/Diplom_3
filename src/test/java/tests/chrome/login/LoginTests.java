@@ -1,19 +1,19 @@
 package tests.chrome.login;
 
-import helpers.UserTestsHelper;
+import utils.ApiClient;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import pageObjects.forgotPassword.ForgotPasswordPageModel;
-import pageObjects.login.LoginPageModel;
-import pageObjects.constructor.ConstructorPageModel;
-import pageObjects.registration.RegistrationPageModel;
-import praktikum.LoginUserResponseModel;
-import praktikum.UserCreateModel;
-import praktikum.UserLoginModel;
+import pages.forgotPassword.ForgotPasswordPageModel;
+import pages.login.LoginPageModel;
+import pages.constructor.ConstructorPageModel;
+import pages.registration.RegistrationPageModel;
+import api.model.LoginUserResponseModel;
+import api.model.UserCreateModel;
+import api.model.UserLoginModel;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 import static com.codeborne.selenide.Selenide.open;
@@ -29,7 +29,7 @@ public class LoginTests {
     public void prepare() {
         RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
         UserCreateModel userCreateModel = new UserCreateModel(email, password, name);
-        UserTestsHelper.sendPostCreateUser(userCreateModel);
+        ApiClient.sendPostCreateUser(userCreateModel);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class LoginTests {
         ConstructorPageModel objMainPage = open("https://stellarburgers.nomoreparties.site", ConstructorPageModel.class);
 
         // выполняем переход на страницу Входа
-        LoginPageModel objcLoginPage = objMainPage.clickAccountLoginButton();
+        LoginPageModel objcLoginPage = objMainPage.openAccountLoginByAccountLoginButton();
         objcLoginPage.checkMainIsExisted();
 
         // заполняем данные и осуществляем вход в аккаунт
@@ -54,7 +54,7 @@ public class LoginTests {
         ConstructorPageModel objMainPage = open("https://stellarburgers.nomoreparties.site", ConstructorPageModel.class);
 
         // выполняем переход на страницу Входа
-        LoginPageModel objcLoginPage = objMainPage.clickPersonalAccountButtonForLogin();
+        LoginPageModel objcLoginPage = objMainPage.openAccountLoginByPersonalAccountButton();
         objcLoginPage.checkMainIsExisted();
 
         // заполняем данные и осуществляем вход в аккаунт
@@ -90,7 +90,7 @@ public class LoginTests {
         );
 
         // выполняем переход на страницу Входа
-        LoginPageModel objcLoginPage = objForgotPasswordPage.clickLoginButton();
+        LoginPageModel objcLoginPage = objForgotPasswordPage.openLoginScreenByLoginButton();
         objcLoginPage.checkMainIsExisted();
 
         // заполняем данные и осуществляем вход в аккаунт
@@ -105,7 +105,7 @@ public class LoginTests {
                 email,
                 password
         );
-        Response loginResponse = UserTestsHelper.sendPostLoginUser(userLoginModel);
+        Response loginResponse = ApiClient.sendPostLoginUser(userLoginModel);
 
         if (loginResponse.statusCode() != 200) {
             closeWebDriver();
@@ -114,7 +114,7 @@ public class LoginTests {
 
         String token = loginResponse.body().as(LoginUserResponseModel.class).getAccessToken();
         if (token != null) {
-            UserTestsHelper.sendDeleteCourier(token);
+            ApiClient.sendDeleteCourier(token);
         }
 
         closeWebDriver();

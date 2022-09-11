@@ -1,15 +1,15 @@
-package helpers;
+package utils;
 
 import io.qameta.allure.Step;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.response.Response;
-import praktikum.UserCreateModel;
-import praktikum.UserLoginModel;
+import api.model.UserCreateModel;
+import api.model.UserLoginModel;
 
 import static io.restassured.RestAssured.given;
 
-public class UserTestsHelper {
+public class ApiClient {
     @Step("Send POST request to /api/auth/register")
     static public Response sendPostCreateUser(UserCreateModel model) {
         return given()

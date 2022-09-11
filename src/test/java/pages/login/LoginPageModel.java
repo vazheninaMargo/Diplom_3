@@ -1,10 +1,11 @@
-package pageObjects.login;
+package pages.login;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
-import pageObjects.constructor.ConstructorPageModel;
+import pages.constructor.ConstructorPageModel;
 
 import static com.codeborne.selenide.Selenide.page;
 
@@ -23,22 +24,7 @@ public class LoginPageModel {
     @FindBy(how = How.XPATH, using = ".//button[text() = 'Войти']")
     private SelenideElement loginButton;
 
-    //метод заполнения поля ввода Email
-    private void setEmail(String email) {
-        emailField.setValue(email);
-    }
-
-    //метод заполнения поля ввода Пароль
-    private void setPassword(String password) {
-        passwordField.setValue(password);
-    }
-
-    //метод нажатия кнопки Войти
-    private void clickLoginButton() {
-        loginButton.click();
-    }
-
-    //метод входа в приложение: объединяет заполнение полей ввода и нажатие кнопки Войти
+    @Step("Заполнение полей формы для входа в аккаунт, и переход на главный экран по кнопке Войти")
     public ConstructorPageModel login(String email, String password) {
         setEmail(email);
         setPassword(password);
@@ -52,5 +38,20 @@ public class LoginPageModel {
 
     public void checkMainIsExisted() {
         main.shouldBe(Condition.exist);
+    }
+
+    @Step("Заполнение поля ввода Email")
+    private void setEmail(String email) {
+        emailField.setValue(email);
+    }
+
+    @Step("Заполнение поля ввода Пароль")
+    private void setPassword(String password) {
+        passwordField.setValue(password);
+    }
+
+    @Step("Нажатие кнопки Войти")
+    private void clickLoginButton() {
+        loginButton.click();
     }
 }

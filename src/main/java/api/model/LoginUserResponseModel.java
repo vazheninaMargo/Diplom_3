@@ -1,4 +1,4 @@
-package praktikum;
+package api.model;
 
 public class LoginUserResponseModel {
     private Boolean success;

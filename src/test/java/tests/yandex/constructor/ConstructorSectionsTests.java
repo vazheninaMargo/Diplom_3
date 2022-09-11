@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import pageObjects.constructor.ConstructorPageModel;
+import pages.constructor.ConstructorPageModel;
 
 import java.util.Properties;
 
@@ -40,7 +40,7 @@ public class ConstructorSectionsTests {
         constructorPageModel.checkMainIsExisted();
 
         // переход к разделу Булки
-        constructorPageModel.clickBun();
+        constructorPageModel.transitionToBun();
     }
 
     @Test
@@ -49,7 +49,7 @@ public class ConstructorSectionsTests {
         constructorPageModel.checkMainIsExisted();
 
         // переход к разделу Соусы
-        constructorPageModel.clickSauces();
+        constructorPageModel.transitionToSauces();
     }
 
     @Test
@@ -58,7 +58,7 @@ public class ConstructorSectionsTests {
         constructorPageModel.checkMainIsExisted();
 
         // переход к разделу Начинки
-        constructorPageModel.clickFillings();
+        constructorPageModel.transitionToFillings();
     }
 
     @AfterClass

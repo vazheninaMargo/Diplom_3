@@ -1,11 +1,14 @@
-package pageObjects.registration;
+package pages.registration;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
-import pageObjects.login.LoginPageModel;
+import pages.login.LoginPageModel;
+
+import static com.codeborne.selenide.Selenide.page;
 
 public class RegistrationPageModel {
 
@@ -31,32 +34,13 @@ public class RegistrationPageModel {
     @FindBy(how = How.XPATH, using = ".//a[text() = 'Войти']")
     private SelenideElement loginButton;
 
-    //метод заполнения поля ввода Имя
-    private void setName(String name) {
-        nameField.setValue(name);
-    }
-
-    //метод заполнения поля ввода Email
-    private void setEmail(String email) {
-        emailField.setValue(email);
-    }
-
-    //метод заполнения поля ввода Пароль
-    private void setPassword(String password) {
-        passwordField.setValue(password);
-    }
-
-    //метод нажатия кнопки Зарегистрироваться
-    private void clickRegistrationButton() {
-        registrationButton.click();
-    }
-
-    //метод регистрации в приложении: объединяет заполнение полей ввода и нажатие кнопки Зарегистрироваться
-    public void registration(String name, String email, String password) {
+    @Step("Заполнение полей формы для регистрации, и переход на экран Входа по Зарегистрироваться ")
+    public LoginPageModel registration(String name, String email, String password) {
         setName(name);
         setEmail(email);
         setPassword(password);
         clickRegistrationButton();
+        return page(LoginPageModel.class);
     }
 
     public void checkPasswordError() {
@@ -67,8 +51,29 @@ public class RegistrationPageModel {
         main.shouldNot(Condition.exist);
     }
 
+    @Step("Переход на экран Входа по кнопке Войти")
     public LoginPageModel clickLoginButton() {
         loginButton.click();
-        return Selenide.open("https://stellarburgers.nomoreparties.site/login", LoginPageModel.class);
+        return page(LoginPageModel.class);
+    }
+
+    @Step("Заполнение поля ввода Имя")
+    private void setName(String name) {
+        nameField.setValue(name);
+    }
+
+    @Step("Заполнение поля ввода Email")
+    private void setEmail(String email) {
+        emailField.setValue(email);
+    }
+
+    @Step("Заполнение поля ввода Пароль")
+    private void setPassword(String password) {
+        passwordField.setValue(password);
+    }
+
+    @Step("Нажатие кнопки Зарегистрироваться")
+    private void clickRegistrationButton() {
+        registrationButton.click();
     }
 }

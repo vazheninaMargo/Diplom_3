@@ -3,7 +3,7 @@ package tests.chrome.constructor;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import pageObjects.constructor.ConstructorPageModel;
+import pages.constructor.ConstructorPageModel;
 
 import static com.codeborne.selenide.Selenide.open;
 
@@ -24,7 +24,7 @@ public class ConstructorSectionsTests {
         constructorPageModel.checkMainIsExisted();
 
         // переход к разделу Булки
-        constructorPageModel.clickBun();
+        constructorPageModel.transitionToBun();
     }
 
     @Test
@@ -33,7 +33,7 @@ public class ConstructorSectionsTests {
         constructorPageModel.checkMainIsExisted();
 
         // переход к разделу Соусы
-        constructorPageModel.clickSauces();
+        constructorPageModel.transitionToSauces();
     }
 
     @Test
@@ -42,6 +42,6 @@ public class ConstructorSectionsTests {
         constructorPageModel.checkMainIsExisted();
 
         // переход к разделу Начинки
-        constructorPageModel.clickFillings();
+        constructorPageModel.transitionToFillings();
     }
 }

@@ -1,7 +1,7 @@
 package tests.yandex.registration;
 
 import com.codeborne.selenide.WebDriverRunner;
-import helpers.UserTestsHelper;
+import utils.ApiClient;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
@@ -12,9 +12,9 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import pageObjects.registration.RegistrationPageModel;
-import praktikum.LoginUserResponseModel;
-import praktikum.UserLoginModel;
+import pages.registration.RegistrationPageModel;
+import api.model.LoginUserResponseModel;
+import api.model.UserLoginModel;
 
 import java.util.Properties;
 
@@ -78,7 +78,7 @@ public class RegistrationTests {
                 email,
                 password
         );
-        Response loginResponse = UserTestsHelper.sendPostLoginUser(userLoginModel);
+        Response loginResponse = ApiClient.sendPostLoginUser(userLoginModel);
 
         if (loginResponse.statusCode() != 200) {
             closeWebDriver();
@@ -87,7 +87,7 @@ public class RegistrationTests {
 
         String token = loginResponse.body().as(LoginUserResponseModel.class).getAccessToken();
         if (token != null) {
-            UserTestsHelper.sendDeleteCourier(token);
+            ApiClient.sendDeleteCourier(token);
         }
 
         closeWebDriver();

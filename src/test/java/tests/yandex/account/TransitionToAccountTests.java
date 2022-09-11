@@ -1,7 +1,7 @@
 package tests.yandex.account;
 
 import com.codeborne.selenide.WebDriverRunner;
-import helpers.UserTestsHelper;
+import utils.ApiClient;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
@@ -12,12 +12,12 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import pageObjects.constructor.ConstructorPageModel;
-import pageObjects.login.LoginPageModel;
-import pageObjects.profile.ProfilePageModel;
-import praktikum.LoginUserResponseModel;
-import praktikum.UserCreateModel;
-import praktikum.UserLoginModel;
+import pages.constructor.ConstructorPageModel;
+import pages.login.LoginPageModel;
+import pages.profile.ProfilePageModel;
+import api.model.LoginUserResponseModel;
+import api.model.UserCreateModel;
+import api.model.UserLoginModel;
 
 import java.util.Properties;
 
@@ -44,7 +44,7 @@ public class TransitionToAccountTests {
         // подготовка пользователя
         RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
         UserCreateModel userCreateModel = new UserCreateModel(email, password, name);
-        UserTestsHelper.sendPostCreateUser(userCreateModel);
+        ApiClient.sendPostCreateUser(userCreateModel);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class TransitionToAccountTests {
         ConstructorPageModel constructorPageModel = objcLoginPage.login(email, password);
         constructorPageModel.checkMainIsExisted();
 
-        ProfilePageModel profilePageModel = constructorPageModel.clickPersonalAccountForProfile();
+        ProfilePageModel profilePageModel = constructorPageModel.openAccountByPersonalAccountButton();
         profilePageModel.checkMainIsExisted();
     }
 
@@ -68,7 +68,7 @@ public class TransitionToAccountTests {
                 email,
                 password
         );
-        Response loginResponse = UserTestsHelper.sendPostLoginUser(userLoginModel);
+        Response loginResponse = ApiClient.sendPostLoginUser(userLoginModel);
 
         if (loginResponse.statusCode() != 200) {
             closeWebDriver();
@@ -77,7 +77,7 @@ public class TransitionToAccountTests {
 
         String token = loginResponse.body().as(LoginUserResponseModel.class).getAccessToken();
         if (token != null) {
-            UserTestsHelper.sendDeleteCourier(token);
+            ApiClient.sendDeleteCourier(token);
         }
 
         closeWebDriver();

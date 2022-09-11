@@ -1,10 +1,11 @@
-package pageObjects.forgotPassword;
+package pages.forgotPassword;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
-import pageObjects.login.LoginPageModel;
+import pages.login.LoginPageModel;
 
 import static com.codeborne.selenide.Selenide.page;
 
@@ -16,9 +17,9 @@ public class ForgotPasswordPageModel {
     @FindBy(how = How.XPATH, using = ".//a[text()='Войти']")
     private SelenideElement loginButton;
 
-    //метод нажатия кнопки Войти
-    public LoginPageModel clickLoginButton() {
-        loginButton.click();
+    @Step("Переход на экран Входа по кнопке Войти")
+    public LoginPageModel openLoginScreenByLoginButton() {
+        clickLoginButton();
         return page(LoginPageModel.class);
     }
 
@@ -28,5 +29,10 @@ public class ForgotPasswordPageModel {
 
     public void checkMainIsExisted() {
         main.shouldBe(Condition.exist);
+    }
+
+    @Step("Нажатие кнопки Войти")
+    private void clickLoginButton() {
+        loginButton.click();
     }
 }

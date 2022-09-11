@@ -1,24 +1,21 @@
 package tests.yandex.login;
 
 import com.codeborne.selenide.WebDriverRunner;
-import helpers.UserTestsHelper;
+import utils.ApiClient;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import pageObjects.constructor.ConstructorPageModel;
-import pageObjects.forgotPassword.ForgotPasswordPageModel;
-import pageObjects.login.LoginPageModel;
-import pageObjects.registration.RegistrationPageModel;
-import praktikum.LoginUserResponseModel;
-import praktikum.UserCreateModel;
-import praktikum.UserLoginModel;
+import pages.constructor.ConstructorPageModel;
+import pages.forgotPassword.ForgotPasswordPageModel;
+import pages.login.LoginPageModel;
+import pages.registration.RegistrationPageModel;
+import api.model.LoginUserResponseModel;
+import api.model.UserCreateModel;
+import api.model.UserLoginModel;
 
 import java.util.Properties;
 
@@ -45,7 +42,7 @@ public class LoginTests {
         // подготовка пользователя
         RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
         UserCreateModel userCreateModel = new UserCreateModel(email, password, name);
-        UserTestsHelper.sendPostCreateUser(userCreateModel);
+        ApiClient.sendPostCreateUser(userCreateModel);
     }
 
     @Test
@@ -55,7 +52,7 @@ public class LoginTests {
         ConstructorPageModel objMainPage = open("https://stellarburgers.nomoreparties.site", ConstructorPageModel.class);
 
         // выполняем переход на страницу Входа
-        LoginPageModel objcLoginPage = objMainPage.clickAccountLoginButton();
+        LoginPageModel objcLoginPage = objMainPage.openAccountLoginByAccountLoginButton();
         objcLoginPage.checkMainIsExisted();
 
         // заполняем данные и осуществляем вход в аккаунт
@@ -70,7 +67,7 @@ public class LoginTests {
         ConstructorPageModel objMainPage = open("https://stellarburgers.nomoreparties.site", ConstructorPageModel.class);
 
         // выполняем переход на страницу Входа
-        LoginPageModel objcLoginPage = objMainPage.clickPersonalAccountButtonForLogin();
+        LoginPageModel objcLoginPage = objMainPage.openAccountLoginByPersonalAccountButton();
         objcLoginPage.checkMainIsExisted();
 
         // заполняем данные и осуществляем вход в аккаунт
@@ -106,7 +103,7 @@ public class LoginTests {
         );
 
         // выполняем переход на страницу Входа
-        LoginPageModel objcLoginPage = objForgotPasswordPage.clickLoginButton();
+        LoginPageModel objcLoginPage = objForgotPasswordPage.openLoginScreenByLoginButton();
         objcLoginPage.checkMainIsExisted();
 
         // заполняем данные и осуществляем вход в аккаунт
@@ -121,7 +118,7 @@ public class LoginTests {
                 email,
                 password
         );
-        Response loginResponse = UserTestsHelper.sendPostLoginUser(userLoginModel);
+        Response loginResponse = ApiClient.sendPostLoginUser(userLoginModel);
 
         if (loginResponse.statusCode() != 200) {
             closeWebDriver();
@@ -130,7 +127,7 @@ public class LoginTests {
 
         String token = loginResponse.body().as(LoginUserResponseModel.class).getAccessToken();
         if (token != null) {
-            UserTestsHelper.sendDeleteCourier(token);
+            ApiClient.sendDeleteCourier(token);
         }
 
         closeWebDriver();

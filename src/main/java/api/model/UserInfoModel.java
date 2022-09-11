@@ -1,4 +1,4 @@
-package praktikum;
+package api.model;
 
 public class UserInfoModel {
     private String email;

@@ -1,11 +1,12 @@
-package pageObjects.profile;
+package pages.profile;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
-import pageObjects.constructor.ConstructorPageModel;
-import pageObjects.login.LoginPageModel;
+import pages.constructor.ConstructorPageModel;
+import pages.login.LoginPageModel;
 
 import static com.codeborne.selenide.Selenide.page;
 
@@ -21,19 +22,15 @@ public class ProfilePageModel {
     @FindBy(how = How.XPATH, using = ".//button[text()='Выход']")
     private SelenideElement logoutButton;
 
-    //метод нажатия кнопки Выйти
-    private void clickLogoutButton() {
-        logoutButton.click();
-    }
-
-    // метод выхода из аккаунта
+    @Step("Выход из аккаунта по кнопке Выход. Переход на экран Входа")
     public LoginPageModel logout() {
         clickLogoutButton();
         return page(LoginPageModel.class);
     }
 
-    public ConstructorPageModel clickByLogo() {
-        logo.click();
+    @Step("Переход на экран конструктора по нажатию на логотип")
+    public ConstructorPageModel transitionToConstructor() {
+        clickByLogo();
         return page(ConstructorPageModel.class);
     }
 
@@ -43,5 +40,15 @@ public class ProfilePageModel {
 
     public void checkMainIsExisted() {
         main.shouldBe(Condition.exist);
+    }
+
+    @Step("Нажатие кнопки Выход")
+    private void clickLogoutButton() {
+        logoutButton.click();
+    }
+
+    @Step("Нажатие на логотип")
+    private void clickByLogo() {
+        logo.click();
     }
 }

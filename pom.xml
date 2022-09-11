@@ -8,10 +8,17 @@
     <artifactId>Diplom_3</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <scm>
+        <url>https://github.com/allure-examples/allure-junit-example</url>
+        <connection>scm:git@github.com:allure-examples/allure-junit-example.git</connection>
+        <developerConnection>scm:git:git@github.com:allure-examples/allure-junit-example.git</developerConnection>
+    </scm>
+
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <allure.version>2.19.0</allure.version>
+        <aspectj.version>1.9.9.1</aspectj.version>
     </properties>
 
     <dependencies>
@@ -55,7 +62,7 @@
         <dependency>
             <groupId>com.codeborne</groupId>
             <artifactId>selenide</artifactId>
-            <version>6.7.3</version>
+            <version>6.7.4</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -76,6 +83,9 @@
                 <version>2.22.2</version>
                 <configuration>
                     <testFailureIgnore>false</testFailureIgnore>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
                     <properties>
                         <property>
                             <name>listener</name>
@@ -89,6 +99,13 @@
                         </property>
                     </systemProperties>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <groupId>io.qameta.allure</groupId>
