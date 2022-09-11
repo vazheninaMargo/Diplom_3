@@ -1,17 +1,12 @@
-package tests.yandex.transitionToConstructor;
+package tests.chrome.constructor;
 
-import com.codeborne.selenide.WebDriverRunner;
 import utils.ApiClient;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import pages.constructor.ConstructorPageModel;
 import pages.login.LoginPageModel;
 import pages.profile.ProfilePageModel;
@@ -19,12 +14,10 @@ import api.client.LoginResponseModel;
 import api.client.RegistrationModel;
 import api.client.LoginModel;
 
-import java.util.Properties;
-
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 import static com.codeborne.selenide.Selenide.open;
 
-@DisplayName("TransitionToConstructorTests - Yandex Browser")
+@DisplayName("TransitionToConstructorTests - Chrome Browser")
 public class TransitionToConstructorTests {
     private final static String email = "rat8@ratmail.rat";
     private final static String password = "123456";
@@ -32,20 +25,10 @@ public class TransitionToConstructorTests {
 
     @Before
     public void prepare() {
-        // установка yandexdriver для тестирования в Yandex Browser
-        Properties prop = System.getProperties();
-        prop.setProperty("webdriver.chrome.driver", "/Users/margaritavazenina/documents/webdriver/bin/yandexdriver");
-        System.setProperties(prop);
-        ChromeOptions chromeOptions = new ChromeOptions();
-        WebDriver webDriver = new ChromeDriver(chromeOptions);
-        WebDriverRunner.setWebDriver(webDriver);
-
-        // подготовка пользователя
         RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
         RegistrationModel userCreateModel = new RegistrationModel(email, password, name);
         ApiClient.sendPostCreateUser(userCreateModel);
 
-        // авторизация
         LoginModel userLoginModel = new LoginModel(
                 email,
                 password
@@ -91,11 +74,6 @@ public class TransitionToConstructorTests {
             ApiClient.sendDeleteCourier(token);
         }
 
-        closeWebDriver();
-    }
-
-    @AfterClass
-    public static void closeBrowser() {
         closeWebDriver();
     }
 }
