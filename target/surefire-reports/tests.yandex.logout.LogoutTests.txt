@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: tests.yandex.logout.LogoutTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.369 s - in tests.yandex.logout.LogoutTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.265 s - in tests.yandex.logout.LogoutTests

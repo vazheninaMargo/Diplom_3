@@ -1,4 +1,4 @@
-praktikum/UserCreateModel.class
-praktikum/UserInfoModel.class
-praktikum/UserLoginModel.class
-praktikum/LoginUserResponseModel.class
+api/model/UserModel.class
+api/client/LoginModel.class
+api/client/RegistrationModel.class
+api/client/LoginResponseModel.class

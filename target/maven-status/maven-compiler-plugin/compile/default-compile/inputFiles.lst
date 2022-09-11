@@ -1,4 +1,4 @@
-/Users/margaritavazenina/Documents/Git/Diplom/Diplom_3/src/main/java/praktikum/UserInfoModel.java
-/Users/margaritavazenina/Documents/Git/Diplom/Diplom_3/src/main/java/praktikum/UserCreateModel.java
-/Users/margaritavazenina/Documents/Git/Diplom/Diplom_3/src/main/java/praktikum/LoginUserResponseModel.java
-/Users/margaritavazenina/Documents/Git/Diplom/Diplom_3/src/main/java/praktikum/UserLoginModel.java
+/Users/margaritavazenina/Documents/Git/Diplom/Diplom_3/src/main/java/api/model/UserModel.java
+/Users/margaritavazenina/Documents/Git/Diplom/Diplom_3/src/main/java/api/client/LoginResponseModel.java
+/Users/margaritavazenina/Documents/Git/Diplom/Diplom_3/src/main/java/api/client/LoginModel.java
+/Users/margaritavazenina/Documents/Git/Diplom/Diplom_3/src/main/java/api/client/RegistrationModel.java

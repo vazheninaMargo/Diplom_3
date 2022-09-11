@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: tests.yandex.constructor.TransitionToConstructorTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.872 s - in tests.yandex.constructor.TransitionToConstructorTests
